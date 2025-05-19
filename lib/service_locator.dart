@@ -12,15 +12,15 @@ import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_cubi
 /// sl = service Locator
 ///
 
-abstract class DataLayerServiceLocator {
+abstract class ServiceLocator {
   Future<void> setup();
   GetIt get sl;
 }
 
 final GetIt serviceLocator = GetIt.asNewInstance();
 
-class DataLayerServiceLocatorImpl implements DataLayerServiceLocator {
-  DataLayerServiceLocatorImpl();
+class ServiceLocatorImpl implements ServiceLocator {
+  ServiceLocatorImpl();
 
   @override
   GetIt get sl => serviceLocator;
@@ -31,8 +31,8 @@ class DataLayerServiceLocatorImpl implements DataLayerServiceLocator {
     serviceLocator.registerFactory<http.Client>(() => http.Client());
     serviceLocator.registerLazySingleton<RemoteDatasource>(() => RemoteDatasourceImpl(client: sl()));
     serviceLocator.registerLazySingleton<BaseRepository>(() => BaseRepositoryImpl(api: sl()));
-    serviceLocator.registerFactory<RocketSelectionCubit>(()=>RocketSelectionCubit(baseRepository: sl()));
-    serviceLocator.registerFactory<ConfigCubit>(()=>ConfigCubit(baseRepository: sl()));
-    serviceLocator.registerFactory<MostNukedCubit>(()=>MostNukedCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<RocketSelectionCubit>(() => RocketSelectionCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<ConfigCubit>(() => ConfigCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<MostNukedCubit>(() => MostNukedCubit(baseRepository: sl()));
   }
 }

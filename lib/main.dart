@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:nukeem/presentation/nukeem_screen.dart';
+import 'package:nukeem/service_locator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:html' as html;
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
@@ -16,6 +17,10 @@ void main() async {
   } catch (e) {
     debugPrint('Error initializing Solana Wallet Adapter: $e');
   }
+
+  ServiceLocator serviceLocatorInstance = ServiceLocatorImpl();
+
+  await serviceLocatorInstance.setup();
 
   runApp(const MyApp());
 }
