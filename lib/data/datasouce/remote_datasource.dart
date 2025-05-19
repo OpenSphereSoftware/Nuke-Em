@@ -8,6 +8,8 @@ const String basepath = 'hitler';
 
 abstract class RemoteDatasource {
   Future<ConfigModel> getConfig();
+  Future<ConfigModel> getLeaderboard();
+  Future<ConfigModel> getRockets();
 }
 
 class RemoteDatasourceImpl implements RemoteDatasource {
@@ -17,6 +19,28 @@ class RemoteDatasourceImpl implements RemoteDatasource {
 
   @override
   Future<ConfigModel> getConfig() async {
+    final response = await client.get(Uri.parse('$basepath/v69/config-service/config/"'), headers: generateHeader());
+    if (response.statusCode != 200) {
+      throw const DataException.server();
+    } else {
+      final responseBody = json.decode(response.body);
+      return ConfigModel.fromJson(responseBody['data']);
+    }
+  }
+
+  @override
+  Future<ConfigModel> getLeaderboard() async {
+    final response = await client.get(Uri.parse('$basepath/v69/config-service/config/"'), headers: generateHeader());
+    if (response.statusCode != 200) {
+      throw const DataException.server();
+    } else {
+      final responseBody = json.decode(response.body);
+      return ConfigModel.fromJson(responseBody['data']);
+    }
+  }
+
+  @override
+  Future<ConfigModel> getRockets() async {
     final response = await client.get(Uri.parse('$basepath/v69/config-service/config/"'), headers: generateHeader());
     if (response.statusCode != 200) {
       throw const DataException.server();
