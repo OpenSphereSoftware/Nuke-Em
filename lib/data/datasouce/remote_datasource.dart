@@ -49,4 +49,14 @@ class RemoteDatasourceImpl implements RemoteDatasource {
       return ConfigModel.fromJson(responseBody['data']);
     }
   }
+
+  @override
+  Future<void> sendNuke() async {
+    final response = await client.post(Uri.parse('$basepath/v69/whoop-service/whoop/"'), headers: generateHeader());
+    if (response.statusCode != 201) {
+      throw const DataException.server();
+    } else {
+      return;
+    }
+  }
 }
