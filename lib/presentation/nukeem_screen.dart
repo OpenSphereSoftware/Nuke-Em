@@ -56,8 +56,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
   }
 
   void _openOverlay() {
-    final TextEditingController scammerAddressController =
-        TextEditingController();
+    final TextEditingController scammerAddressController = TextEditingController();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     bool isTransactionInProgress = false;
     String? transactionMessage;
@@ -92,8 +91,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                     filled: true,
                     fillColor: AppStyle.colors.layer2,
                     border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.spacings.xxs),
+                      borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
                       borderSide: BorderSide.none,
                     ),
                     contentPadding: EdgeInsets.symmetric(
@@ -134,8 +132,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                             await Future.delayed(Duration(seconds: 2));
 
                             setState(() {
-                              transactionMessage =
-                                  "SCAMMER ${scammerAddressController.text} GOT NUKED";
+                              transactionMessage = "SCAMMER ${scammerAddressController.text} GOT NUKED";
                               isTransactionInProgress = false;
                             });
                           } catch (e) {
@@ -149,9 +146,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppStyle.colors.accent,
                   foregroundColor: AppStyle.colors.dark,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppStyle.spacings.m,
-                      vertical: AppStyle.spacings.xs),
+                  padding: EdgeInsets.symmetric(horizontal: AppStyle.spacings.m, vertical: AppStyle.spacings.xs),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
                   ),
@@ -176,9 +171,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppStyle.colors.layer2,
                   foregroundColor: AppStyle.colors.light,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppStyle.spacings.m,
-                      vertical: AppStyle.spacings.xs),
+                  padding: EdgeInsets.symmetric(horizontal: AppStyle.spacings.m, vertical: AppStyle.spacings.xs),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
                   ),
@@ -220,10 +213,8 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
               Condition.equals(name: DESKTOP, value: 1400),
             ]).value,
             child: Padding(
-              padding: EdgeInsets.only(
-                  left: AppStyle.spacings.l,
-                  right: AppStyle.spacings.l,
-                  top: AppStyle.spacings.xl),
+              padding:
+                  EdgeInsets.only(left: AppStyle.spacings.l, right: AppStyle.spacings.l, top: AppStyle.spacings.xl),
               child: BouncingScrollWrapper(
                 child: SingleChildScrollView(
                   child: ResponsiveRowColumn(
@@ -234,23 +225,20 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                       ResponsiveRowColumnItem(
                         rowFlex: 2,
                         child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(maxHeight: 700, maxWidth: 400),
+                          constraints: BoxConstraints(maxHeight: 700, maxWidth: 400),
                           child: StandardCard(
                               child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 'Most Nuked',
-                                style: AppStyle.textStyles.h1.bold.accent
-                                    .copyWith(fontSize: 44),
+                                style: AppStyle.textStyles.h1.bold.accent.copyWith(fontSize: 44),
                               ),
                               SizedBox(height: AppStyle.spacings.xxxs),
                               GlobalCountdown(),
                               SizedBox(height: AppStyle.spacings.xs),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'City',
@@ -276,23 +264,19 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                   itemBuilder: (context, i) => Padding(
                                     padding: EdgeInsets.symmetric(vertical: 2),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'gaycity',
-                                          style: AppStyle
-                                              .textStyles.h5.bold.lightGrey,
+                                          style: AppStyle.textStyles.h5.bold.lightGrey,
                                         ),
                                         Text(
                                           'India',
-                                          style: AppStyle
-                                              .textStyles.h5.bold.lightGrey,
+                                          style: AppStyle.textStyles.h5.bold.lightGrey,
                                         ),
                                         Text(
                                           '555',
-                                          style: AppStyle
-                                              .textStyles.h5.bold.lightGrey,
+                                          style: AppStyle.textStyles.h5.bold.lightGrey,
                                         ),
                                       ],
                                     ),
@@ -325,16 +309,13 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                           children: [
                                             Expanded(
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   Spacer(),
                                                   Text(
                                                     'Tired of getting rugged by Scammers? ',
-                                                    style: AppStyle.textStyles
-                                                        .h2.regular.light,
+                                                    style: AppStyle.textStyles.h2.regular.light,
                                                     textAlign: TextAlign.center,
                                                   ),
                                                   SizedBox(
@@ -342,99 +323,56 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: _openOverlay,
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: AppStyle
-                                                          .colors.accent
-                                                          .withAlpha(100),
-                                                      foregroundColor:
-                                                          AppStyle.colors.dark,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 16,
-                                                          vertical: 8),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: AppStyle.colors.accent.withAlpha(100),
+                                                      foregroundColor: AppStyle.colors.dark,
+                                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
                                                       ),
                                                     ),
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Text(
                                                           'NUKE-',
-                                                          style: AppStyle
-                                                              .textStyles
-                                                              .h1
-                                                              .bold
-                                                              .light
-                                                              .copyWith(
-                                                                  fontSize: 50,
-                                                                  color: Colors
-                                                                      .white),
+                                                          style: AppStyle.textStyles.h1.bold.light
+                                                              .copyWith(fontSize: 50, color: Colors.white),
                                                         ),
                                                         Text(
                                                           'EM',
-                                                          style: AppStyle
-                                                              .textStyles
-                                                              .h1
-                                                              .bold
-                                                              .light
-                                                              .copyWith(
-                                                                  fontSize: 50,
-                                                                  color: Color(
-                                                                      0xff52d694)),
+                                                          style: AppStyle.textStyles.h1.bold.light
+                                                              .copyWith(fontSize: 50, color: Color(0xff52d694)),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
                                                   SizedBox(
-                                                    height:
-                                                        AppStyle.spacings.xxs,
+                                                    height: AppStyle.spacings.xxs,
                                                   ),
                                                   Text(
                                                     'To Add Them To Our Registry',
-                                                    style: AppStyle.textStyles
-                                                        .h5.regular.light,
+                                                    style: AppStyle.textStyles.h5.regular.light,
                                                     textAlign: TextAlign.center,
                                                   ),
                                                   Spacer(),
-                                                  BlocBuilder<
-                                                      RocketSelectionCubit,
-                                                      RocketSelectionState>(
+                                                  BlocBuilder<RocketSelectionCubit, RocketSelectionState>(
                                                     builder: (context, state) {
                                                       return state.maybeMap(
-                                                          selection:
-                                                              (selection) =>
-                                                                  FloatingWrapper(
-                                                                    child:
-                                                                        ShakingImage(
-                                                                      imagePath:
-                                                                          'assets/rockets/${selection.selected}.png',
-                                                                    ),
-                                                                  ),
+                                                          selection: (selection) => FloatingWrapper(
+                                                                child: ShakingImage(
+                                                                  imagePath: 'assets/rockets/${selection.selected}.png',
+                                                                ),
+                                                              ),
                                                           orElse: () => Shimmer(
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                        colors: [
-                                                                      AppStyle
-                                                                          .colors
-                                                                          .layer3,
-                                                                      Colors.grey[
-                                                                          500]!
-                                                                    ]),
+                                                                gradient: LinearGradient(colors: [
+                                                                  AppStyle.colors.layer3,
+                                                                  Colors.grey[500]!
+                                                                ]),
                                                                 child: Padding(
                                                                     padding: EdgeInsets.symmetric(
-                                                                        horizontal: AppStyle
-                                                                            .spacings
-                                                                            .xl),
-                                                                    child: Image
-                                                                        .asset(
-                                                                            'assets/rockets/0.png')),
+                                                                        horizontal: AppStyle.spacings.xl),
+                                                                    child: Image.asset('assets/rockets/0.png')),
                                                               ));
                                                     },
                                                   ),
@@ -454,11 +392,9 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                               child: Transform(
                                                   alignment: Alignment.center,
                                                   transform: Matrix4.identity()
-                                                    ..setEntry(3, 2,
-                                                        0.0015) // perspective
+                                                    ..setEntry(3, 2, 0.0015) // perspective
                                                     ..rotateX(-0.15)
-                                                    ..rotateY(
-                                                        0.3), // kippt nach hinten rechts
+                                                    ..rotateY(0.3), // kippt nach hinten rechts
                                                   //..rotateY(0.3))
                                                   /*,*/
                                                   child: ExplosionMap())))
@@ -525,9 +461,7 @@ class _GlobalCountdownState extends State<GlobalCountdown> {
     final hours = duration.inHours.toString().padLeft(2, '0');
     final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
     final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    final milliseconds = (duration.inMilliseconds % 1000 ~/ 10)
-        .toString()
-        .padLeft(2, '0'); // 2-digit ms
+    final milliseconds = (duration.inMilliseconds % 1000 ~/ 10).toString().padLeft(2, '0'); // 2-digit ms
     return '$hours:$minutes:$seconds:$milliseconds';
   }
 
@@ -575,9 +509,7 @@ class RocketSelectionWidget extends StatelessWidget {
     return BlocBuilder<RocketSelectionCubit, RocketSelectionState>(
       builder: (context, state) {
         return StandardCard(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppStyle.spacings.m,
-                vertical: AppStyle.spacings.xs),
+            padding: EdgeInsets.symmetric(horizontal: AppStyle.spacings.m, vertical: AppStyle.spacings.xs),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -609,15 +541,11 @@ class RocketSelectionWidget extends StatelessWidget {
                         loading: (_) => Padding(
                               padding: const EdgeInsets.only(top: 0),
                               child: Shimmer(
-                                gradient: LinearGradient(colors: [
-                                  AppStyle.colors.layer3,
-                                  Colors.grey[500]!
-                                ]),
+                                gradient: LinearGradient(colors: [AppStyle.colors.layer3, Colors.grey[500]!]),
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: 6,
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(
+                                  separatorBuilder: (context, index) => SizedBox(
                                     width: AppStyle.spacings.s,
                                   ),
                                   itemBuilder: (context, index) => Container(
@@ -625,29 +553,22 @@ class RocketSelectionWidget extends StatelessWidget {
                                     width: 120,
                                     decoration: BoxDecoration(
                                         color: AppStyle.colors.layer2,
-                                        borderRadius: BorderRadius.circular(
-                                            AppStyle.spacings.xs)),
+                                        borderRadius: BorderRadius.circular(AppStyle.spacings.xs)),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         children: [
-                                          Expanded(
-                                              child: Image.asset(
-                                                  'assets/rockets/0.png')),
+                                          Expanded(child: Image.asset('assets/rockets/0.png')),
                                           SizedBox(
                                             height: 2,
                                           ),
                                           Text(
                                             'Rocket',
-                                            style: AppStyle
-                                                .textStyles.h5.bold.lightGrey
-                                                .copyWith(fontSize: 12),
+                                            style: AppStyle.textStyles.h5.bold.lightGrey.copyWith(fontSize: 12),
                                           ),
                                           Text(
                                             'Damage',
-                                            style: AppStyle
-                                                .textStyles.label.bold.light
-                                                .copyWith(fontSize: 10),
+                                            style: AppStyle.textStyles.label.bold.light.copyWith(fontSize: 10),
                                           ),
                                         ],
                                       ),
@@ -670,68 +591,44 @@ class RocketSelectionWidget extends StatelessWidget {
                                     child: ListView.separated(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: 6,
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(
+                                      separatorBuilder: (context, index) => SizedBox(
                                         width: AppStyle.spacings.s,
                                       ),
-                                      itemBuilder: (context, index) =>
-                                          MouseRegion(
-                                        onEnter: (_) => changeCursorImage(
-                                            'assets/images/curser_click.png'),
-                                        onExit: (_) => changeCursorImage(
-                                            'assets/images/curser_normal.png'),
+                                      itemBuilder: (context, index) => MouseRegion(
+                                        onEnter: (_) => changeCursorImage('assets/images/curser_click.png'),
+                                        onExit: (_) => changeCursorImage('assets/images/curser_normal.png'),
                                         child: GestureDetector(
-                                          onTap: () => BlocProvider.of<
-                                                  RocketSelectionCubit>(context)
-                                              .select(index),
+                                          onTap: () => BlocProvider.of<RocketSelectionCubit>(context).select(index),
                                           child: Container(
                                             height: 120,
                                             width: 120,
                                             decoration: BoxDecoration(
-                                                border:
-                                                    selectionState.selected ==
-                                                            index
-                                                        ? Border.all(
-                                                            color: AppStyle
-                                                                .colors.accent,
-                                                            width: 2)
-                                                        : null,
-                                                color: selectionState
-                                                            .selected ==
-                                                        index
+                                                border: selectionState.selected == index
+                                                    ? Border.all(color: AppStyle.colors.accent, width: 2)
+                                                    : null,
+                                                color: selectionState.selected == index
                                                     ? AppStyle.colors.layer3
                                                     : AppStyle.colors.layer2,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        AppStyle.spacings.xs)),
+                                                borderRadius: BorderRadius.circular(AppStyle.spacings.xs)),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
-                                                  selectionState.selected ==
-                                                          index
+                                                  selectionState.selected == index
                                                       ? Expanded(
                                                           child: FloatingWrapper(
-                                                              child: Image.asset(
-                                                                  'assets/rockets/${index}.png')))
-                                                      : Expanded(
-                                                          child: Image.asset(
-                                                              'assets/rockets/${index}.png')),
+                                                              child: Image.asset('assets/rockets/${index}.png')))
+                                                      : Expanded(child: Image.asset('assets/rockets/${index}.png')),
                                                   SizedBox(
                                                     height: 2,
                                                   ),
                                                   Text(
                                                     'Rockettype',
-                                                    style: AppStyle.textStyles
-                                                        .h5.bold.lightGrey
-                                                        .copyWith(fontSize: 12),
+                                                    style: AppStyle.textStyles.h5.bold.lightGrey.copyWith(fontSize: 12),
                                                   ),
                                                   Text(
                                                     'Damage: 50',
-                                                    style: AppStyle.textStyles
-                                                        .label.bold.light
-                                                        .copyWith(fontSize: 10),
+                                                    style: AppStyle.textStyles.label.bold.light.copyWith(fontSize: 10),
                                                   ),
                                                 ],
                                               ),
