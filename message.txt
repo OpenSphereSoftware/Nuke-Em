@@ -1,0 +1,412 @@
+```json
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API",
+    "description": "Some Stuff",
+    "version": "69"
+  },
+  "paths": {
+    "/v69/config-service/config/": {
+      "get": {
+        "tags": [
+          "type"
+        ],
+        "summary": "Get Config",
+        "operationId": "get_config_v69_config_service_config__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_Config_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v69/offer-service/offers/": {
+      "get": {
+        "tags": [
+          "offer"
+        ],
+        "summary": "Get Offers",
+        "operationId": "get_offers_v69_offer_service_offers__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_List_Offer__"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v69/board-service/leaderboard/": {
+      "get": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Get Leaderboard",
+        "operationId": "get_leaderboard_v69_board_service_leaderboard__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_List_Board__"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v69/whoop-service/whoop/": {
+      "post": {
+        "tags": [
+          "whoop"
+        ],
+        "summary": "Whoop Target",
+        "operationId": "whoop_target_v69_whoop_service_whoop__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Whoop"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_List_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v69/registry-service/registry/": {
+      "get": {
+        "tags": [
+          "registry"
+        ],
+        "summary": "Get Nuked Registry",
+        "operationId": "get_nuked_registry_v69_registry_service_registry__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_List_Board__"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v69/registry-service/registry/search/": {
+      "get": {
+        "tags": [
+          "registry"
+        ],
+        "summary": "Get Nuked Registry",
+        "operationId": "get_nuked_registry_v69_registry_service_registry_search__get",
+        "parameters": [
+          {
+            "name": "search_query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Search Query"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper_List_Board__"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Board": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "country_name": {
+            "type": "string",
+            "title": "Country Name"
+          },
+          "counter": {
+            "type": "integer",
+            "title": "Counter"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "country_name",
+          "counter"
+        ],
+        "title": "Board"
+      },
+      "Config": {
+        "properties": {
+          "disclaimerMessage": {
+            "type": "string",
+            "title": "Disclaimermessage"
+          },
+          "currentTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Currenttimeutc"
+          },
+          "nextRefreshTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Nextrefreshtimeutc"
+          },
+          "refreshInHours": {
+            "type": "integer",
+            "title": "Refreshinhours"
+          }
+        },
+        "type": "object",
+        "required": [
+          "disclaimerMessage",
+          "currentTimeUtc",
+          "nextRefreshTimeUtc",
+          "refreshInHours"
+        ],
+        "title": "Config"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Offer": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "damage": {
+            "type": "integer",
+            "title": "Damage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "damage"
+        ],
+        "title": "Offer"
+      },
+      "ResponseWrapper_Config_": {
+        "properties": {
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timetolive"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Config"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timeToLive",
+          "data"
+        ],
+        "title": "ResponseWrapper[Config]"
+      },
+      "ResponseWrapper_List_": {
+        "properties": {
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timetolive"
+          },
+          "data": {
+            "items": {
+
+            },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timeToLive",
+          "data"
+        ],
+        "title": "ResponseWrapper[List]"
+      },
+      "ResponseWrapper_List_Board__": {
+        "properties": {
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timetolive"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Board"
+            },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timeToLive",
+          "data"
+        ],
+        "title": "ResponseWrapper[List[Board]]"
+      },
+      "ResponseWrapper_List_Offer__": {
+        "properties": {
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timetolive"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Offer"
+            },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timeToLive",
+          "data"
+        ],
+        "title": "ResponseWrapper[List[Offer]]"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Whoop": {
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "title": "Latitude"
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude"
+          },
+          "whooperId": {
+            "type": "integer",
+            "title": "Whooperid"
+          }
+        },
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude",
+          "whooperId"
+        ],
+        "title": "Whoop"
+      }
+    }
+  }
+}
+```
