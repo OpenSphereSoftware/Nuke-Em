@@ -16,6 +16,7 @@ import 'package:nukeem/presentation/widgets/overlay_dialog.dart';
 import 'package:nukeem/presentation/widgets/shaking_image.dart';
 import 'package:nukeem/presentation/widgets/standard_card.dart';
 import 'package:nukeem/presentation/widgets/wallet_connect_button.dart';
+import 'package:nukeem/service_locator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
@@ -30,7 +31,7 @@ class NukeEmScreenWrapper extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => RocketSelectionCubit()..load(),
+          create: (context) => serviceLocator<RocketSelectionCubit>()..load(),
         ),
       ],
       child: const NukeEmScreen(),

@@ -20,21 +20,21 @@ mixin _$ConfigState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function() loaded,
+    required TResult Function(ConfigModel config) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function()? loaded,
+    TResult? Function(ConfigModel config)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function()? loaded,
+    TResult Function(ConfigModel config)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,7 +126,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function() loaded,
+    required TResult Function(ConfigModel config) loaded,
   }) {
     return loading();
   }
@@ -136,7 +136,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function()? loaded,
+    TResult? Function(ConfigModel config)? loaded,
   }) {
     return loading?.call();
   }
@@ -146,7 +146,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function()? loaded,
+    TResult Function(ConfigModel config)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -237,7 +237,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function() loaded,
+    required TResult Function(ConfigModel config) loaded,
   }) {
     return error();
   }
@@ -247,7 +247,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function()? loaded,
+    TResult? Function(ConfigModel config)? loaded,
   }) {
     return error?.call();
   }
@@ -257,7 +257,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function()? loaded,
+    TResult Function(ConfigModel config)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -310,6 +310,10 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ConfigModel config});
+
+  $ConfigModelCopyWith<$Res> get config;
 }
 
 /// @nodoc
@@ -322,35 +326,70 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
   /// Create a copy of ConfigState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? config = null,
+  }) {
+    return _then(_$LoadedImpl(
+      config: null == config
+          ? _value.config
+          : config // ignore: cast_nullable_to_non_nullable
+              as ConfigModel,
+    ));
+  }
+
+  /// Create a copy of ConfigState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ConfigModelCopyWith<$Res> get config {
+    return $ConfigModelCopyWith<$Res>(_value.config, (value) {
+      return _then(_value.copyWith(config: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl({required this.config});
+
+  @override
+  final ConfigModel config;
 
   @override
   String toString() {
-    return 'ConfigState.loaded()';
+    return 'ConfigState.loaded(config: $config)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.config, config) || other.config == config));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, config);
+
+  /// Create a copy of ConfigState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function() loaded,
+    required TResult Function(ConfigModel config) loaded,
   }) {
-    return loaded();
+    return loaded(config);
   }
 
   @override
@@ -358,9 +397,9 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function()? loaded,
+    TResult? Function(ConfigModel config)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(config);
   }
 
   @override
@@ -368,11 +407,11 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function()? loaded,
+    TResult Function(ConfigModel config)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(config);
     }
     return orElse();
   }
@@ -413,5 +452,13 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements ConfigState {
-  const factory _Loaded() = _$LoadedImpl;
+  const factory _Loaded({required final ConfigModel config}) = _$LoadedImpl;
+
+  ConfigModel get config;
+
+  /// Create a copy of ConfigState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
