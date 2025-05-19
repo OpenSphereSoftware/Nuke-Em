@@ -49,7 +49,10 @@ class _LiveRocketTickerState extends State<LiveRocketTicker> {
   Widget build(BuildContext context) {
     return Stack(
       children: _rockets.map((rocket) {
-        return _FlyingRocket(rocket: rocket, size: size,);
+        return _FlyingRocket(
+          rocket: rocket,
+          size: size,
+        );
       }).toList(),
     );
   }
@@ -73,7 +76,7 @@ class _FlyingRocket extends StatefulWidget {
   final Size size;
   final _RocketData rocket;
 
-  const _FlyingRocket({super.key, required this.rocket, required this.size});
+  const _FlyingRocket({required this.rocket, required this.size});
 
   @override
   State<_FlyingRocket> createState() => _FlyingRocketState();
