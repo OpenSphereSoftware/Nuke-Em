@@ -77,10 +77,8 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
               Condition.equals(name: DESKTOP, value: 1400),
             ]).value,
             child: Padding(
-              padding: EdgeInsets.only(
-                  left: AppStyle.spacings.l,
-                  right: AppStyle.spacings.l,
-                  top: AppStyle.spacings.xl),
+              padding:
+                  EdgeInsets.only(left: AppStyle.spacings.l, right: AppStyle.spacings.l, top: AppStyle.spacings.xl),
               child: BouncingScrollWrapper(
                 child: SingleChildScrollView(
                   child: ResponsiveRowColumn(
@@ -91,8 +89,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                       ResponsiveRowColumnItem(
                         rowFlex: 2,
                         child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(maxHeight: 700, maxWidth: 400),
+                          constraints: BoxConstraints(maxHeight: 700, maxWidth: 400),
                           child: StandardCard(
                               child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -216,10 +213,10 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                                     builder: (context, state) {
                                                       return state.maybeMap(
                                                           selection: (selection) => FloatingWrapper(
-                                                            child: ShakingImage(
+                                                                child: ShakingImage(
                                                                   imagePath: 'assets/rockets/${selection.selected}.png',
                                                                 ),
-                                                          ),
+                                                              ),
                                                           orElse: () => Shimmer(
                                                                 gradient: LinearGradient(colors: [
                                                                   AppStyle.colors.layer3,
