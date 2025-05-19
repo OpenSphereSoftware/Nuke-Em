@@ -1,29 +1,19 @@
 import 'dart:async';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nukeem/main.dart';
 import 'package:nukeem/presentation/config_cubit/config_cubit.dart';
 import 'package:nukeem/presentation/most_nuked_cubit/most_nuked_cubit.dart';
 import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_cubit.dart';
-import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_state.dart';
 import 'package:nukeem/presentation/style.dart';
 import 'package:nukeem/presentation/widgets/background_gradient.dart';
 import 'package:nukeem/presentation/widgets/explosion_map.dart';
-import 'package:nukeem/presentation/widgets/floating_wrapper.dart';
-import 'package:nukeem/presentation/widgets/global_countdown.dart';
-import 'package:nukeem/presentation/widgets/live_rocket_ticker.dart';
-import 'package:nukeem/presentation/widgets/map_wrapper.dart';
 import 'package:nukeem/presentation/widgets/most_nuked.dart';
 import 'package:nukeem/presentation/widgets/overlay_dialog.dart';
 import 'package:nukeem/presentation/widgets/rocket_selection.dart';
-import 'package:nukeem/presentation/widgets/shaking_image.dart';
-import 'package:nukeem/presentation/widgets/standard_card.dart';
+import 'package:nukeem/presentation/widgets/selected_rocket_floating.dart';
 import 'package:nukeem/presentation/widgets/wallet_connect_button.dart';
 import 'package:nukeem/service_locator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:shimmer/shimmer.dart';
 
 class NukeEmScreenWrapper extends StatelessWidget {
   const NukeEmScreenWrapper({super.key});
@@ -244,117 +234,100 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                       ResponsiveRowColumnItem(
                         rowFlex: 5,
                         child: ConstrainedBox(
-                            constraints: BoxConstraints(maxHeight: 700),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Flexible(
-                                        flex: 1,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Spacer(),
-                                                  Text(
-                                                    'Tired of getting rugged by Scammers? ',
-                                                    style: AppStyle.textStyles.h2.regular.light,
-                                                    textAlign: TextAlign.center,
+                          constraints: BoxConstraints(maxHeight: 700),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Spacer(),
+                                                Text(
+                                                  'Tired of getting rugged by Scammers? ',
+                                                  style: AppStyle.textStyles.h2.regular.light,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(
+                                                  height: AppStyle.spacings.s,
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: _openOverlay,
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: AppStyle.colors.accent.withAlpha(100),
+                                                    foregroundColor: AppStyle.colors.dark,
+                                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                    ),
                                                   ),
-                                                  SizedBox(
-                                                    height: AppStyle.spacings.s,
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: _openOverlay,
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: AppStyle.colors.accent.withAlpha(100),
-                                                      foregroundColor: AppStyle.colors.dark,
-                                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        'NUKE-',
+                                                        style: AppStyle.textStyles.h1.bold.light
+                                                            .copyWith(fontSize: 50, color: Colors.white),
                                                       ),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Text(
-                                                          'NUKE-',
-                                                          style: AppStyle.textStyles.h1.bold.light
-                                                              .copyWith(fontSize: 50, color: Colors.white),
-                                                        ),
-                                                        Text(
-                                                          'EM',
-                                                          style: AppStyle.textStyles.h1.bold.light
-                                                              .copyWith(fontSize: 50, color: Color(0xff52d694)),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                      Text(
+                                                        'EM',
+                                                        style: AppStyle.textStyles.h1.bold.light
+                                                            .copyWith(fontSize: 50, color: Color(0xff52d694)),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  SizedBox(
-                                                    height: AppStyle.spacings.xxs,
-                                                  ),
-                                                  Text(
-                                                    'To Add Them To Our Registry',
-                                                    style: AppStyle.textStyles.h5.regular.light,
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  Spacer(),
-                                                  BlocBuilder<RocketSelectionCubit, RocketSelectionState>(
-                                                    builder: (context, state) {
-                                                      return state.maybeMap(
-                                                          selection: (selection) => FloatingWrapper(
-                                                                child: ShakingImage(
-                                                                  imagePath: 'assets/rockets/${selection.selected}.png',
-                                                                ),
-                                                              ),
-                                                          orElse: () => Shimmer(
-                                                                gradient: LinearGradient(colors: [
-                                                                  AppStyle.colors.layer3,
-                                                                  Colors.grey[500]!
-                                                                ]),
-                                                                child: Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal: AppStyle.spacings.xl),
-                                                                    child: Image.asset('assets/rockets/0.png')),
-                                                              ));
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
+                                                ),
+                                                SizedBox(
+                                                  height: AppStyle.spacings.xxs,
+                                                ),
+                                                Text(
+                                                  'To Add Them To Our Registry',
+                                                  style: AppStyle.textStyles.h5.regular.light,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Spacer(),
+                                                SelectedRocketFloating()
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: AppStyle.spacings.m,
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(50),
+                                        child: Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.identity()
+                                            ..setEntry(3, 2, 0.0015)
+                                            ..rotateX(-0.15)
+                                            ..rotateY(0.3),
+                                          child: ExplosionMap(),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: AppStyle.spacings.m,
-                                      ),
-                                      Flexible(
-                                          flex: 2,
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(50),
-                                              child: Transform(
-                                                  alignment: Alignment.center,
-                                                  transform: Matrix4.identity()
-                                                    ..setEntry(3, 2, 0.0015) // perspective
-                                                    ..rotateX(-0.15)
-                                                    ..rotateY(0.3), // kippt nach hinten rechts
-                                                  //..rotateY(0.3))
-                                                  /*,*/
-                                                  child: ExplosionMap())))
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: AppStyle.spacings.s,
-                                ),
-                                RocketSelectionWidget()
-                              ],
-                            )),
+                              ),
+                              SizedBox(
+                                height: AppStyle.spacings.s,
+                              ),
+                              RocketSelectionWidget()
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   ),
