@@ -11,6 +11,7 @@ import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_stat
 import 'package:nukeem/presentation/style.dart';
 import 'package:nukeem/presentation/widgets/background_gradient.dart';
 import 'package:nukeem/presentation/widgets/explosion_map.dart';
+import 'package:nukeem/presentation/widgets/floating_wrapper.dart';
 import 'package:nukeem/presentation/widgets/live_rocket_ticker.dart';
 import 'package:nukeem/presentation/widgets/map_wrapper.dart';
 import 'package:nukeem/presentation/widgets/shaking_image.dart';
@@ -86,7 +87,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                 'Most Nuked',
                                 style: AppStyle.textStyles.h1.bold.accent.copyWith(fontSize: 44),
                               ),
-                                SizedBox(height: AppStyle.spacings.xxxs),
+                              SizedBox(height: AppStyle.spacings.xxxs),
                               GlobalCountdown(),
                               SizedBox(height: AppStyle.spacings.xs),
                               Row(
@@ -188,7 +189,7 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                                       ),
                                                     ],
                                                   ),
-                                                           SizedBox(
+                                                  SizedBox(
                                                     height: AppStyle.spacings.xxs,
                                                   ),
                                                   Text(
@@ -200,9 +201,11 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                                   BlocBuilder<RocketSelectionCubit, RocketSelectionState>(
                                                     builder: (context, state) {
                                                       return state.maybeMap(
-                                                          selection: (selection) => ShakingImage(
-                                                                imagePath: 'assets/rockets/${selection.selected}.png',
-                                                              ),
+                                                          selection: (selection) => FloatingWrapper(
+                                                            child: ShakingImage(
+                                                                  imagePath: 'assets/rockets/${selection.selected}.png',
+                                                                ),
+                                                          ),
                                                           orElse: () => Shimmer(
                                                                 gradient: LinearGradient(colors: [
                                                                   AppStyle.colors.layer3,
@@ -453,7 +456,11 @@ class RocketSelectionWidget extends StatelessWidget {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
-                                                  Expanded(child: Image.asset('assets/rockets/${index}.png')),
+                                                  selectionState.selected == index
+                                                      ? Expanded(
+                                                          child: FloatingWrapper(
+                                                              child: Image.asset('assets/rockets/${index}.png')))
+                                                      : Expanded(child: Image.asset('assets/rockets/${index}.png')),
                                                   SizedBox(
                                                     height: 2,
                                                   ),
