@@ -623,11 +623,11 @@ class RocketSelectionWidget extends StatelessWidget {
                                                     height: 2,
                                                   ),
                                                   Text(
-                                                    'Rockettype',
+                                                    selectionState.rockets[index].name,
                                                     style: AppStyle.textStyles.h5.bold.lightGrey.copyWith(fontSize: 12),
                                                   ),
                                                   Text(
-                                                    'Damage: 50',
+                                                    'Damage: ${selectionState.rockets[index].damage}',
                                                     style: AppStyle.textStyles.label.bold.light.copyWith(fontSize: 10),
                                                   ),
                                                 ],

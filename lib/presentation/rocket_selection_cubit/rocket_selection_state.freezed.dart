@@ -20,27 +20,27 @@ mixin _$RocketSelectionState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -139,9 +139,9 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) {
     return loading();
   }
@@ -151,9 +151,9 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) {
     return loading?.call();
   }
@@ -163,9 +163,9 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -262,9 +262,9 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) {
     return error();
   }
@@ -274,9 +274,9 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) {
     return error?.call();
   }
@@ -286,9 +286,9 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -348,7 +348,7 @@ abstract class _$$SelectionImplCopyWith<$Res> {
           _$SelectionImpl value, $Res Function(_$SelectionImpl) then) =
       __$$SelectionImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int selected});
+  $Res call({int selected, List<Rocket> rockets});
 }
 
 /// @nodoc
@@ -365,12 +365,17 @@ class __$$SelectionImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selected = null,
+    Object? rockets = null,
   }) {
     return _then(_$SelectionImpl(
       selected: null == selected
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
               as int,
+      rockets: null == rockets
+          ? _value._rockets
+          : rockets // ignore: cast_nullable_to_non_nullable
+              as List<Rocket>,
     ));
   }
 }
@@ -378,14 +383,23 @@ class __$$SelectionImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SelectionImpl implements _Selection {
-  const _$SelectionImpl({required this.selected});
+  const _$SelectionImpl(
+      {required this.selected, required final List<Rocket> rockets})
+      : _rockets = rockets;
 
   @override
   final int selected;
+  final List<Rocket> _rockets;
+  @override
+  List<Rocket> get rockets {
+    if (_rockets is EqualUnmodifiableListView) return _rockets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rockets);
+  }
 
   @override
   String toString() {
-    return 'RocketSelectionState.selection(selected: $selected)';
+    return 'RocketSelectionState.selection(selected: $selected, rockets: $rockets)';
   }
 
   @override
@@ -394,11 +408,13 @@ class _$SelectionImpl implements _Selection {
         (other.runtimeType == runtimeType &&
             other is _$SelectionImpl &&
             (identical(other.selected, selected) ||
-                other.selected == selected));
+                other.selected == selected) &&
+            const DeepCollectionEquality().equals(other._rockets, _rockets));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selected);
+  int get hashCode => Object.hash(
+      runtimeType, selected, const DeepCollectionEquality().hash(_rockets));
 
   /// Create a copy of RocketSelectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -413,11 +429,11 @@ class _$SelectionImpl implements _Selection {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) {
-    return selection(selected);
+    return selection(selected, rockets);
   }
 
   @override
@@ -425,11 +441,11 @@ class _$SelectionImpl implements _Selection {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) {
-    return selection?.call(selected);
+    return selection?.call(selected, rockets);
   }
 
   @override
@@ -437,13 +453,13 @@ class _$SelectionImpl implements _Selection {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) {
     if (selection != null) {
-      return selection(selected);
+      return selection(selected, rockets);
     }
     return orElse();
   }
@@ -490,9 +506,12 @@ class _$SelectionImpl implements _Selection {
 }
 
 abstract class _Selection implements RocketSelectionState {
-  const factory _Selection({required final int selected}) = _$SelectionImpl;
+  const factory _Selection(
+      {required final int selected,
+      required final List<Rocket> rockets}) = _$SelectionImpl;
 
   int get selected;
+  List<Rocket> get rockets;
 
   /// Create a copy of RocketSelectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -506,6 +525,8 @@ abstract class _$$LaunchingImplCopyWith<$Res> {
   factory _$$LaunchingImplCopyWith(
           _$LaunchingImpl value, $Res Function(_$LaunchingImpl) then) =
       __$$LaunchingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int selected, List<Rocket> rockets});
 }
 
 /// @nodoc
@@ -518,37 +539,79 @@ class __$$LaunchingImplCopyWithImpl<$Res>
 
   /// Create a copy of RocketSelectionState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? selected = null,
+    Object? rockets = null,
+  }) {
+    return _then(_$LaunchingImpl(
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as int,
+      rockets: null == rockets
+          ? _value._rockets
+          : rockets // ignore: cast_nullable_to_non_nullable
+              as List<Rocket>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LaunchingImpl implements _Launching {
-  const _$LaunchingImpl();
+  const _$LaunchingImpl(
+      {required this.selected, required final List<Rocket> rockets})
+      : _rockets = rockets;
+
+  @override
+  final int selected;
+  final List<Rocket> _rockets;
+  @override
+  List<Rocket> get rockets {
+    if (_rockets is EqualUnmodifiableListView) return _rockets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rockets);
+  }
 
   @override
   String toString() {
-    return 'RocketSelectionState.launching()';
+    return 'RocketSelectionState.launching(selected: $selected, rockets: $rockets)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LaunchingImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LaunchingImpl &&
+            (identical(other.selected, selected) ||
+                other.selected == selected) &&
+            const DeepCollectionEquality().equals(other._rockets, _rockets));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, selected, const DeepCollectionEquality().hash(_rockets));
+
+  /// Create a copy of RocketSelectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LaunchingImplCopyWith<_$LaunchingImpl> get copyWith =>
+      __$$LaunchingImplCopyWithImpl<_$LaunchingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) {
-    return launching();
+    return launching(selected, rockets);
   }
 
   @override
@@ -556,11 +619,11 @@ class _$LaunchingImpl implements _Launching {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) {
-    return launching?.call();
+    return launching?.call(selected, rockets);
   }
 
   @override
@@ -568,13 +631,13 @@ class _$LaunchingImpl implements _Launching {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) {
     if (launching != null) {
-      return launching();
+      return launching(selected, rockets);
     }
     return orElse();
   }
@@ -621,7 +684,18 @@ class _$LaunchingImpl implements _Launching {
 }
 
 abstract class _Launching implements RocketSelectionState {
-  const factory _Launching() = _$LaunchingImpl;
+  const factory _Launching(
+      {required final int selected,
+      required final List<Rocket> rockets}) = _$LaunchingImpl;
+
+  int get selected;
+  List<Rocket> get rockets;
+
+  /// Create a copy of RocketSelectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LaunchingImplCopyWith<_$LaunchingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -630,7 +704,7 @@ abstract class _$$CooldownImplCopyWith<$Res> {
           _$CooldownImpl value, $Res Function(_$CooldownImpl) then) =
       __$$CooldownImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int seconds});
+  $Res call({int selected, List<Rocket> rockets});
 }
 
 /// @nodoc
@@ -646,13 +720,18 @@ class __$$CooldownImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seconds = null,
+    Object? selected = null,
+    Object? rockets = null,
   }) {
     return _then(_$CooldownImpl(
-      seconds: null == seconds
-          ? _value.seconds
-          : seconds // ignore: cast_nullable_to_non_nullable
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as int,
+      rockets: null == rockets
+          ? _value._rockets
+          : rockets // ignore: cast_nullable_to_non_nullable
+              as List<Rocket>,
     ));
   }
 }
@@ -660,14 +739,23 @@ class __$$CooldownImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CooldownImpl implements _Cooldown {
-  const _$CooldownImpl({required this.seconds});
+  const _$CooldownImpl(
+      {required this.selected, required final List<Rocket> rockets})
+      : _rockets = rockets;
 
   @override
-  final int seconds;
+  final int selected;
+  final List<Rocket> _rockets;
+  @override
+  List<Rocket> get rockets {
+    if (_rockets is EqualUnmodifiableListView) return _rockets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rockets);
+  }
 
   @override
   String toString() {
-    return 'RocketSelectionState.cooldown(seconds: $seconds)';
+    return 'RocketSelectionState.cooldown(selected: $selected, rockets: $rockets)';
   }
 
   @override
@@ -675,11 +763,14 @@ class _$CooldownImpl implements _Cooldown {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CooldownImpl &&
-            (identical(other.seconds, seconds) || other.seconds == seconds));
+            (identical(other.selected, selected) ||
+                other.selected == selected) &&
+            const DeepCollectionEquality().equals(other._rockets, _rockets));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seconds);
+  int get hashCode => Object.hash(
+      runtimeType, selected, const DeepCollectionEquality().hash(_rockets));
 
   /// Create a copy of RocketSelectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -694,11 +785,11 @@ class _$CooldownImpl implements _Cooldown {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(int selected) selection,
-    required TResult Function() launching,
-    required TResult Function(int seconds) cooldown,
+    required TResult Function(int selected, List<Rocket> rockets) selection,
+    required TResult Function(int selected, List<Rocket> rockets) launching,
+    required TResult Function(int selected, List<Rocket> rockets) cooldown,
   }) {
-    return cooldown(seconds);
+    return cooldown(selected, rockets);
   }
 
   @override
@@ -706,11 +797,11 @@ class _$CooldownImpl implements _Cooldown {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(int selected)? selection,
-    TResult? Function()? launching,
-    TResult? Function(int seconds)? cooldown,
+    TResult? Function(int selected, List<Rocket> rockets)? selection,
+    TResult? Function(int selected, List<Rocket> rockets)? launching,
+    TResult? Function(int selected, List<Rocket> rockets)? cooldown,
   }) {
-    return cooldown?.call(seconds);
+    return cooldown?.call(selected, rockets);
   }
 
   @override
@@ -718,13 +809,13 @@ class _$CooldownImpl implements _Cooldown {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(int selected)? selection,
-    TResult Function()? launching,
-    TResult Function(int seconds)? cooldown,
+    TResult Function(int selected, List<Rocket> rockets)? selection,
+    TResult Function(int selected, List<Rocket> rockets)? launching,
+    TResult Function(int selected, List<Rocket> rockets)? cooldown,
     required TResult orElse(),
   }) {
     if (cooldown != null) {
-      return cooldown(seconds);
+      return cooldown(selected, rockets);
     }
     return orElse();
   }
@@ -771,9 +862,12 @@ class _$CooldownImpl implements _Cooldown {
 }
 
 abstract class _Cooldown implements RocketSelectionState {
-  const factory _Cooldown({required final int seconds}) = _$CooldownImpl;
+  const factory _Cooldown(
+      {required final int selected,
+      required final List<Rocket> rockets}) = _$CooldownImpl;
 
-  int get seconds;
+  int get selected;
+  List<Rocket> get rockets;
 
   /// Create a copy of RocketSelectionState
   /// with the given fields replaced by the non-null parameter values.
