@@ -11,12 +11,17 @@ import 'package:nukeem/presentation/widgets/background_gradient.dart';
 import 'package:nukeem/presentation/widgets/explosion_map.dart';
 import 'package:nukeem/presentation/widgets/floating_wrapper.dart';
 import 'package:nukeem/presentation/widgets/live_rocket_ticker.dart';
+import 'package:nukeem/presentation/widgets/map_wrapper.dart';
+import 'package:nukeem/presentation/widgets/overlay_dialog.dart';
 import 'package:nukeem/presentation/widgets/shaking_image.dart';
 import 'package:nukeem/presentation/widgets/standard_card.dart';
 import 'package:nukeem/presentation/widgets/wallet_connect_button.dart';
 import 'package:nukeem/service_locator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
+import 'package:solana_web3/solana_web3.dart';
+import 'package:solana_web3/programs.dart';
 
 class NukeEmScreenWrapper extends StatelessWidget {
   const NukeEmScreenWrapper({super.key});
@@ -48,6 +53,139 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _openOverlay() {
+    final TextEditingController scammerAddressController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    bool isTransactionInProgress = false;
+    String? transactionMessage;
+
+    OverlayDialogHelper.show(
+      context: context,
+      child: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Found a scammer? NUKE EM!',
+                style: AppStyle.textStyles.h2.bold.accent,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppStyle.spacings.m),
+              Text(
+                'Connect your solana wallet, insert the social media address of the scammer and send a nuke his way for the small fee of 1 SOL.',
+                style: AppStyle.textStyles.info.regular.light,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppStyle.spacings.m),
+              Form(
+                key: formKey,
+                child: TextFormField(
+                  controller: scammerAddressController,
+                  style: AppStyle.textStyles.h5.regular.light,
+                  decoration: InputDecoration(
+                    hintText: 'Enter scammer address',
+                    hintStyle: AppStyle.textStyles.h5.regular.lightGrey,
+                    filled: true,
+                    fillColor: AppStyle.colors.layer2,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: AppStyle.spacings.s,
+                      vertical: AppStyle.spacings.xs,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a scammer address';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(height: AppStyle.spacings.m),
+              if (transactionMessage != null)
+                Padding(
+                  padding: EdgeInsets.only(bottom: AppStyle.spacings.s),
+                  child: Text(
+                    transactionMessage!,
+                    style: AppStyle.textStyles.h4.bold.accent,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ElevatedButton(
+                onPressed: isTransactionInProgress
+                    ? null
+                    : () async {
+                        if (formKey.currentState!.validate()) {
+                          setState(() {
+                            isTransactionInProgress = true;
+                            transactionMessage = null;
+                          });
+
+                          try {
+                            // Simulate a successful transaction for now
+                            await Future.delayed(Duration(seconds: 2));
+
+                            setState(() {
+                              transactionMessage = "SCAMMER ${scammerAddressController.text} GOT NUKED";
+                              isTransactionInProgress = false;
+                            });
+                          } catch (e) {
+                            setState(() {
+                              transactionMessage = "Error: ${e.toString()}";
+                              isTransactionInProgress = false;
+                            });
+                          }
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppStyle.colors.accent,
+                  foregroundColor: AppStyle.colors.dark,
+                  padding: EdgeInsets.symmetric(horizontal: AppStyle.spacings.m, vertical: AppStyle.spacings.xs),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
+                  ),
+                ),
+                child: isTransactionInProgress
+                    ? SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppStyle.colors.dark,
+                        ),
+                      )
+                    : Text(
+                        'NUKE EM',
+                        style: AppStyle.textStyles.h5.bold.dark,
+                      ),
+              ),
+              SizedBox(height: AppStyle.spacings.m),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppStyle.colors.layer2,
+                  foregroundColor: AppStyle.colors.light,
+                  padding: EdgeInsets.symmetric(horizontal: AppStyle.spacings.m, vertical: AppStyle.spacings.xs),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppStyle.spacings.xxs),
+                  ),
+                ),
+                child: Text(
+                  'Close',
+                  style: AppStyle.textStyles.h5.bold.light,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -183,20 +321,31 @@ class _NukeEmScreenState extends State<NukeEmScreen> {
                                                   SizedBox(
                                                     height: AppStyle.spacings.s,
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Text(
-                                                        'NUKE-',
-                                                        style: AppStyle.textStyles.h1.bold.light
-                                                            .copyWith(fontSize: 50, color: Colors.white),
+                                                  ElevatedButton(
+                                                    onPressed: _openOverlay,
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: AppStyle.colors.accent.withAlpha(100),
+                                                      foregroundColor: AppStyle.colors.dark,
+                                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
                                                       ),
-                                                      Text(
-                                                        'EM',
-                                                        style: AppStyle.textStyles.h1.bold.light
-                                                            .copyWith(fontSize: 50, color: Color(0xff52d694)),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Text(
+                                                          'NUKE-',
+                                                          style: AppStyle.textStyles.h1.bold.light
+                                                              .copyWith(fontSize: 50, color: Colors.white),
+                                                        ),
+                                                        Text(
+                                                          'EM',
+                                                          style: AppStyle.textStyles.h1.bold.light
+                                                              .copyWith(fontSize: 50, color: Color(0xff52d694)),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     height: AppStyle.spacings.xxs,
