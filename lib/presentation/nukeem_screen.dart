@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nukeem/main.dart';
+import 'package:nukeem/presentation/config_cubit/config_cubit.dart';
+import 'package:nukeem/presentation/most_nuked_cubit/most_nuked_cubit.dart';
 import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_cubit.dart';
 import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_state.dart';
 import 'package:nukeem/presentation/style.dart';
@@ -19,9 +21,6 @@ import 'package:nukeem/presentation/widgets/wallet_connect_button.dart';
 import 'package:nukeem/service_locator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
-import 'package:solana_web3/solana_web3.dart';
-import 'package:solana_web3/programs.dart';
 
 class NukeEmScreenWrapper extends StatelessWidget {
   const NukeEmScreenWrapper({super.key});
@@ -31,7 +30,13 @@ class NukeEmScreenWrapper extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => serviceLocator<ConfigCubit>()..loadConfig(),
+        ),
+        BlocProvider(
           create: (context) => serviceLocator<RocketSelectionCubit>()..load(),
+        ),
+        BlocProvider(
+          create: (context) => serviceLocator<MostNukedCubit>()..loadLeaderboard(),
         ),
       ],
       child: const NukeEmScreen(),
