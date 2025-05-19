@@ -4,6 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:nukeem/data/datasouce/remote_datasource.dart';
 import 'package:nukeem/domain/repos/repository.dart';
+import 'package:nukeem/presentation/config_cubit/config_cubit.dart';
+import 'package:nukeem/presentation/most_nuked_cubit/most_nuked_cubit.dart';
+import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_cubit.dart';
 
 ///
 /// sl = service Locator
@@ -14,18 +17,22 @@ abstract class DataLayerServiceLocator {
   GetIt get sl;
 }
 
+final GetIt serviceLocator = GetIt.asNewInstance();
+
 class DataLayerServiceLocatorImpl implements DataLayerServiceLocator {
   DataLayerServiceLocatorImpl();
-  final GetIt _dataLayerSL = GetIt.asNewInstance();
 
   @override
-  GetIt get sl => _dataLayerSL;
+  GetIt get sl => serviceLocator;
 
   @override
   Future<void> setup() async {
     // externs
-    _dataLayerSL.registerFactory<http.Client>(() => http.Client());
-    _dataLayerSL.registerLazySingleton<RemoteDatasource>(() => RemoteDatasourceImpl(client: sl()));
-    _dataLayerSL.registerLazySingleton<BaseRepository>(() => BaseRepositoryImpl(api: sl()));
+    serviceLocator.registerFactory<http.Client>(() => http.Client());
+    serviceLocator.registerLazySingleton<RemoteDatasource>(() => RemoteDatasourceImpl(client: sl()));
+    serviceLocator.registerLazySingleton<BaseRepository>(() => BaseRepositoryImpl(api: sl()));
+    serviceLocator.registerSingleton<RocketSelectionCubit>(RocketSelectionCubit(baseRepository: sl()));
+    serviceLocator.registerSingleton<ConfigCubit>(ConfigCubit(baseRepository: sl()));
+    serviceLocator.registerSingleton<MostNukedCubit>(MostNukedCubit(baseRepository: sl()));
   }
 }

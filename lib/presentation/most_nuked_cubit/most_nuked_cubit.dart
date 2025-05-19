@@ -22,7 +22,6 @@ class MostNukedCubit extends Cubit<MostNukedState> {
     }, (r) {
       failureCount = 0;
       emit(MostNukedState.loaded(mostNuked: []));
-      // Start polling only once after initial load
       _startPolling();
     });
   }
@@ -30,7 +29,6 @@ class MostNukedCubit extends Cubit<MostNukedState> {
   int failureCount = 0;
 
   void _startPolling() {
-    // Avoid multiple timers
     _pollingTimer?.cancel();
 
     _pollingTimer = Timer.periodic(const Duration(minutes: 1), (_) async {
