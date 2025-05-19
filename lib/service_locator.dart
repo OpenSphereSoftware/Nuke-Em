@@ -31,8 +31,8 @@ class DataLayerServiceLocatorImpl implements DataLayerServiceLocator {
     serviceLocator.registerFactory<http.Client>(() => http.Client());
     serviceLocator.registerLazySingleton<RemoteDatasource>(() => RemoteDatasourceImpl(client: sl()));
     serviceLocator.registerLazySingleton<BaseRepository>(() => BaseRepositoryImpl(api: sl()));
-    serviceLocator.registerSingleton<RocketSelectionCubit>(RocketSelectionCubit(baseRepository: sl()));
-    serviceLocator.registerSingleton<ConfigCubit>(ConfigCubit(baseRepository: sl()));
-    serviceLocator.registerSingleton<MostNukedCubit>(MostNukedCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<RocketSelectionCubit>(()=>RocketSelectionCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<ConfigCubit>(()=>ConfigCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<MostNukedCubit>(()=>MostNukedCubit(baseRepository: sl()));
   }
 }
