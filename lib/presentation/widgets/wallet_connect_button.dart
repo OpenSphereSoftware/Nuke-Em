@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
 import 'package:nukeem/presentation/style.dart';
 import 'dart:async';
+import 'package:nukeem/service_locator.dart';
 
 class WalletConnectButton extends StatefulWidget {
   const WalletConnectButton({super.key});
@@ -11,14 +12,7 @@ class WalletConnectButton extends StatefulWidget {
 }
 
 class _WalletConnectButtonState extends State<WalletConnectButton> {
-  final SolanaWalletAdapter _adapter = SolanaWalletAdapter(
-    AppIdentity(
-      name: "Nuke-Em",
-      uri: Uri(host: "nuke-em.com"),
-      icon: Uri.file("logos/flutter_white/logo.png"),
-    ),
-    cluster: Cluster.devnet,
-  );
+  late final SolanaWalletAdapter _adapter;
 
   bool _isConnecting = false;
   String? _walletAddress;
@@ -28,6 +22,7 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
   @override
   void initState() {
     super.initState();
+    _adapter = serviceLocator<SolanaWalletAdapter>();
     _initWallet();
   }
 
@@ -46,7 +41,8 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
     } catch (e) {
       setState(() {
         _errorMessage = "Failed to initialize wallet: ${e.toString()}";
-        _isInitialized = true; // Still mark as initialized so we can show the error
+        _isInitialized =
+            true; // Still mark as initialized so we can show the error
       });
       debugPrint('Error initializing wallet adapter: $e');
     }
@@ -78,7 +74,8 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = "hFailed to connect wallet: ${e.toString().split('\n').first}";
+        _errorMessage =
+            "hFailed to connect wallet: ${e.toString().split('\n').first}";
       });
       debugPrint('Wallet connection error: $e');
     } finally {
@@ -96,7 +93,8 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
       });
     } catch (e) {
       setState(() {
-        _errorMessage = "Failed to disconnect wallet: ${e.toString().split('\n').first}";
+        _errorMessage =
+            "Failed to disconnect wallet: ${e.toString().split('\n').first}";
       });
       debugPrint('Wallet disconnection error: $e');
     }
@@ -161,7 +159,9 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
               ),
             ),
           ),
-        _walletAddress != null ? _buildConnectedButton() : _buildConnectButton(),
+        _walletAddress != null
+            ? _buildConnectedButton()
+            : _buildConnectButton(),
       ],
     );
   }

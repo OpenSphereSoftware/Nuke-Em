@@ -45,11 +45,12 @@ dependencies:
   get_it: ^8.0.3
   json_annotation: ^4.9.0
   dartz: ^0.10.1
-  solana_wallet_adapter: ^0.1.5
+  solana_wallet_provider: ^0.1.9
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:

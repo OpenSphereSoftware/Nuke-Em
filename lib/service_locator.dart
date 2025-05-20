@@ -7,6 +7,9 @@ import 'package:nukeem/domain/repos/repository.dart';
 import 'package:nukeem/presentation/config_cubit/config_cubit.dart';
 import 'package:nukeem/presentation/most_nuked_cubit/most_nuked_cubit.dart';
 import 'package:nukeem/presentation/rocket_selection_cubit/rocket_selection_cubit.dart';
+import 'package:nukeem/presentation/scammer_nuke_cubit/scammer_nuke_cubit.dart';
+import 'package:solana_wallet_adapter/solana_wallet_adapter.dart';
+import 'package:solana_web3/solana_web3.dart' as solana_web3;
 
 ///
 /// sl = service Locator
@@ -34,5 +37,16 @@ class ServiceLocatorImpl implements ServiceLocator {
     serviceLocator.registerFactory<RocketSelectionCubit>(() => RocketSelectionCubit(baseRepository: sl()));
     serviceLocator.registerFactory<ConfigCubit>(() => ConfigCubit(baseRepository: sl()));
     serviceLocator.registerFactory<MostNukedCubit>(() => MostNukedCubit(baseRepository: sl()));
+    serviceLocator.registerFactory<ScammerNukeCubit>(() => ScammerNukeCubit());
+
+    // Register the SolanaWalletAdapter as a singleton
+    serviceLocator.registerLazySingleton<SolanaWalletAdapter>(() => SolanaWalletAdapter(
+          AppIdentity(
+            name: "Nuke-Em",
+            uri: Uri.parse("https://nuke-em.com"),
+            icon: Uri.parse("https://nuke-em.com/logo.png"),
+          ),
+          cluster: solana_web3.Cluster.mainnet,
+        ));
   }
 }
